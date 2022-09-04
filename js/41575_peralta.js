@@ -26,67 +26,125 @@ class Usuario {
 
     let usuario_1 = new Usuario (prompt("Ingrese su nombre"), prompt("Ingrese su apellido"), prompt("Ingrese su edad"), prompt("Ingrese su dni")); //Se le pide al Usuario los datos personales
 
-    if (usuario_1.edad < 18){ //Condicional que impide al usuario usar el simulador en caso de ser menor de edad
+    //Serie de condicionales que evitan que se se deje vacío el campo
+    if (usuario_1.nombre == ""){
 
-        alert ("Si sos menor de edad no podes realizar ninguna operación");
+        alert ("Coloque un nombre válido");
+
+    }
+    else if (usuario_1.apellido == ""){
+
+        alert ("Coloque un apellido válido");
+
+    }
+    else if (usuario_1.edad < 18 || usuario_1.edad == ""){ //Condicional que impide al usuario usar el simulador en caso de ser menor de edad
+
+            alert ("Si sos menor de edad no podes realizar ninguna operación");
+
+    }
+    else if (usuario_1.dni == ""){
+
+        alert ("Coloque un DNI válido");
 
 
     }
-    else { //Condicional que ejecuta la operación en caso de ser mayor de edad
+    else { //Condicional que ejecuta la operación en caso de ser llenar bien los campos
 
-        let monto = parseInt(prompt("Ingrese el monto que desee")); //Prompt que pide ingresar un monto
-        let cuotas =parseInt(prompt("Ingrese la cantidad de cuotas en las que desee pagar: 3/6/9/12")); //Prompt que pide ingresar las cuotas
+        let monto = parseInt(prompt("Ingrese el monto que desee. El monto mínimo a solicitar es de $5.000 y el monto máximo es de $1.000.000")); //Prompt que pide ingresar un monto
 
+        if (monto <= 1000000 && monto >= 5000){ //Condicional que delimita los montos que peuden ser solicitados
 
-        if (cuotas == 3) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 3 cuotas
+            let cuotas =parseInt(prompt("Ingrese la cantidad de cuotas en las que desee pagar: 3/6/9/12")); //Prompt que pide ingresar las cuotas
+        
+        
+            if (cuotas == 3) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 3 cuotas
+        
+                let porcentaje_en_3_cuotas = valor_cuotas (monto , cuotas) * 0.10; //Toma la función "Valor_cuotas" y saca el 10% del resultado
+                let pago_final = valor_cuotas (monto, cuotas) + porcentaje_en_3_cuotas; //Suma el 10% al resultado de la función "Valor_cuotas"
 
-            let porcentaje_en_3_cuotas = valor_cuotas (monto , cuotas) * 0.10; //Toma la función "Valor_cuotas" y saca el 10% del resultado
-            let pago_final = valor_cuotas (monto, cuotas) + porcentaje_en_3_cuotas; //Suma el 10% al resultado de la función "Valor_cuotas"
-        
-            console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
-        
-        }
-        else if (cuotas == 6) { //Condicional que se encarga de agregarle el 15% de interes si el usuario eligió calcular en 6 cuotas
-        
-            let porcentaje_en_6_cuotas = valor_cuotas (monto , cuotas) * 0.15; //Toma la función "Valor_cuotas" y saca el 15% del resultado
-            let pago_final = valor_cuotas (monto , cuotas) + porcentaje_en_6_cuotas; //Suma el 15% al resultado de la función "Valor_cuotas"
-        
-            console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
-        
-        }
-        else if (cuotas == 9) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 9 cuotas
-            let porcentaje_en_9_cuotas = valor_cuotas (monto, cuotas) * 0.20; //Toma la función "Valor_cuotas" y saca el 20% del resultado
-            let pago_final = valor_cuotas (monto , cuotas) + porcentaje_en_9_cuotas; //Suma el 20% al resultado de la función "Valor_cuotas"
-        
-            console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
-        }
-        else if (cuotas == 12) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 12 cuotas
-            let porcentaje_en_12_cuotas = valor_cuotas (monto, cuotas) * 0.25; //Toma la función "Valor_cuotas" y saca el 25% del resultado
-            let pago_final = valor_cuotas (monto, cuotas) + porcentaje_en_12_cuotas; //Suma el 25% al resultado de la función "Valor_cuotas"
-        
-            console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
-        }
-        
-        else {
-            while (cuotas != 3 || cuotas != 6 || cuotas != 9 || cuotas != 12){ //Condicional que se encarga de de mandar un mensaje pr alet en caso de no haber ingresado un dato valido
-        
-                alert ("No se pudo calcular el valor de las cuotas");
-                break;
-        
+                usuario_1.get_datos(); //Muestra los datos de el usuario por consola
+
+                console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
+
+            
             }
+            else if (cuotas == 6) { //Condicional que se encarga de agregarle el 15% de interes si el usuario eligió calcular en 6 cuotas
+            
+                let porcentaje_en_6_cuotas = valor_cuotas (monto , cuotas) * 0.15; //Toma la función "Valor_cuotas" y saca el 15% del resultado
+                let pago_final = valor_cuotas (monto , cuotas) + porcentaje_en_6_cuotas; //Suma el 15% al resultado de la función "Valor_cuotas"
+
+                usuario_1.get_datos(); //Muestra los datos de el usuario por consola
+
+                console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
+            
+            }
+            else if (cuotas == 9) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 9 cuotas
+                let porcentaje_en_9_cuotas = valor_cuotas (monto, cuotas) * 0.20; //Toma la función "Valor_cuotas" y saca el 20% del resultado
+                let pago_final = valor_cuotas (monto , cuotas) + porcentaje_en_9_cuotas; //Suma el 20% al resultado de la función "Valor_cuotas"
+
+                usuario_1.get_datos(); //Muestra los datos de el usuario por consola
+
+                console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
+            }
+            else if (cuotas == 12) { //Condicional que se encarga de agregarle el 10% de interes si el usuario eligió calcular en 12 cuotas
+                let porcentaje_en_12_cuotas = valor_cuotas (monto, cuotas) * 0.25; //Toma la función "Valor_cuotas" y saca el 25% del resultado
+                let pago_final = valor_cuotas (monto, cuotas) + porcentaje_en_12_cuotas; //Suma el 25% al resultado de la función "Valor_cuotas"
+
+                usuario_1.get_datos(); //Muestra los datos de el usuario por consola
+
+                console.log ("El valor de la cuota mensual con interes es de $" + pago_final);
+            }
+            
+            else {
+                while (cuotas != 3 || cuotas != 6 || cuotas != 9 || cuotas != 12){ //Condicional que se encarga de de mandar un mensaje pr alet en caso de no haber ingresado un dato valido
+            
+                    alert ("No se pudo calcular el valor de las cuotas");
+                    break;
+            
+                }
+            }
+
+
+
         }
+        //Serie de condicionales que no permiten que se introduzca un monto mayor o menor al establecido
+        else if (monto > 1000000){
+
+            alert ("Error en la operación. Se está solicitando un monto mayor al permitido");
+
+
+        }
+        else if (monto < 5000){
+
+            alert ("Error en la operación. Se está solicitando un monto menor al permitido");
+
+        }
+        else{
+
+            alert ("Por Favor introduzca una cifra");
+
+        }
+
+
+
     }
+
+
+
+
+
+
 
 
     function valor_cuotas (monto, cuotas){ //Función que divide el moto por las cuotas para obtener el valor de las cuotas sin intereses
 
         let pago_cuotas = monto / cuotas;
         return pago_cuotas;
-        
+
     }
 
 
-    usuario_1.get_datos(); //Muestra los datos de el usuario por consola
+
 
 
 
